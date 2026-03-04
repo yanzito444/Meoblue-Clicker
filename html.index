@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Meoblue Clicker</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    text-align:center;
+    background-size:cover;
+    background-position:center;
+    color:white;
+}
+
+#menu{
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:url("https://images.unsplash.com/photo-1690480150509-b2306320b11c?fm=jpg&q=60&w=3000&auto=format&fit=crop") no-repeat center center;
+    background-size:cover;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+}
+
+button{
+    padding:10px 20px;
+    font-size:16px;
+    margin:5px;
+    cursor:pointer;
+}
+
+#game{
+    display:none;
+    padding-top:20px;
+}
+
+#clicker{
+    width:200px;
+    cursor:pointer;
+    transition:0.1s;
+}
+
+#clicker:active{
+    transform:scale(0.9);
+}
+
+.shop{
+    background:rgba(0,0,0,0.6);
+    padding:10px;
+    margin:10px;
+    border-radius:10px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="menu">
+    <h1>Meoblue Clicker</h1>
+    <button onclick="startGame()">Jogar</button>
+</div>
+
+<div id="game">
+    <h2>Pontos: <span id="points">0</span></h2>
+    <img id="clicker" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjmgD2BvMBlJE07VByaBnZyPJAfP0cBtfCId-zYZD-dcNIiXHVOMbHhJHG3tAQNz_h56mLTyO6sVPtViAr-HfNqXvUiCKiOX2iUT6Sj7E0d6rXFqq1GAUfCoJ_fsGShyphenhyphenymUzBYzqKms6gQq1x4xQie9DbMlLmsfQiJfTeiwdnDINalWVuADS5ox67HKGHE/s320/1000516239-removebg-preview%20(1).png" onclick="clickMeoblue()">
+
+    <div class="shop">
+        <h3>Lojinha</h3>
+        <button onclick="buyHouse()">Casinha ( <span id="housePrice">100</span> )</button>
+        <p>Possui: <span id="houses">0</span></p>
+
+        <button onclick="buyFlower()">Flor ( <span id="flowerPrice">50</span> )</button>
+        <p>Possui: <span id="flowers">0</span></p>
+    </div>
+
+    <div class="shop">
+        <h3>Skins</h3>
+        <button onclick="buySkin(2000,'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj12U4FgxGmrgNwWelc6ra_xxf8ZmUG6De5RtmJk8vGt484ISwy6LMjGvOR1pzRq3M9AzUasx7PDZErI2hvgImD2UIsOYPr0Dpp92Bsb039CDt-sAL1FXfD2wOSox5qjY-HoAZUQkp4Vw-O_frHmfnTBTsFJ_aLudTdhEkqkNPmEQhQZiG_HGgElOYEmjs/s320/1000516290.png')">El Gatiblue (2000)</button>
+
+        <button onclick="buySkin(4000,'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiCGGrYvQ-HSJfUG_Id2LLjkjR5Mkvjj1kWygMpzg8q23wbciLeM_1O1QOWmIaEWGBr2uenDCktojETfd4mMUvJ28MdjjSEJWf5ZFalWwlxsAGmWDUvSnW_Fz-UG8uTkfBAx_ydmeg9XoaWUFTulRvEh3HXP-s76r-XlIZDT3qACfKFG71ac-8pAe4YkiQ/s320/1000516305.png')">Noiablue (4000)</button>
+
+        <button onclick="buySkin(6000,'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgVLdys_8DAQoytn1G5wRRUIZLlDRkJ5sDyxl-htxqdhN3rWXiCHFdSnjv-9KeRvOS-fbkH6anm1qdAV0QTkPcQDTAeCRhyjXH0mGDUoqcHyLOQMcGBqNUyUV7_o18snekYHYFoCTNrvCaZqAnFRnhz60N9R1ivsvyIwhib1FJtz0txaWJb5jH00x_u09E/s320/1000516316.png')">Instablue (6000)</button>
+
+        <button onclick="buySkin(8000,'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh55SD2P7YzCTvhR0u9XlNSj349xuJyYkyO7xZEmz7xejB7kq7wU2oljjt9CwEIXutjbeEs4GL45_KXzDgOyk__AAoRHgg7EBv8y-l72dqvmoq3Hi-KCNVe169IzUmyBVbUU2yGPLly6IPAcRcm8dEiTFtE8jhzt5hDKjdjpZoNSrKsIxfgMPG-NpQlbnU/s320/1000516314.png')">Alienblue (8000)</button>
+
+        <button onclick="buySkin(10000,'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjkxMwRH4xd8WV6MkjaiUUmk3StjZH7g24j1beXBXMdFk_MLHxoD8boF74lQxV0tlDhtF2Er7p5A2AhLPtMaYBqK1niqX1MwVC3hNRDs7ieEh01OjBfI4nVibju2zzhB0an6uliCSSrX2SnM4C9-hoIJpmdcGqXooMSgbbdoUQAt4e3Mjy0FTyIO3TFZrA/s320/1000516284.png')">Primo famoso (10000)</button>
+    </div>
+</div>
+
+<script>
+let points = 0;
+let clickValue = 1;
+let houses = 0;
+let flowers = 0;
+let housePrice = 100;
+let flowerPrice = 50;
+
+function startGame(){
+    document.getElementById("menu").style.display="none";
+    document.getElementById("game").style.display="block";
+    document.body.style.backgroundImage="url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjgklewBqqsZwSA-CkWVUDYD28k53_gZk_tzTp078Rr1G4S-hrGmj-RWCmv2eD_w0SZVwpUmLh6uitZzSrkaJJDsUHELxLvWr-xSS9CCL1VBac9eOXd5Nps_6hsUo3nHSgHy5BUrCF3N2caeGozSRRCK2zDNy_z3Ze7h1fXRc2FUsfv_2-Yhejmw0X6brw/s320/0.png')";
+}
+
+function updateUI(){
+    document.getElementById("points").innerText=Math.floor(points);
+    document.getElementById("houses").innerText=houses;
+    document.getElementById("flowers").innerText=flowers;
+    document.getElementById("housePrice").innerText=Math.floor(housePrice);
+    document.getElementById("flowerPrice").innerText=Math.floor(flowerPrice);
+
+    if(houses>=10 && flowers>=15 && points>=10000){
+        alert("VOCÊ ZEROU O MEO BLUE CLICKER 💙🔥");
+    }
+}
+
+function clickMeoblue(){
+    points += clickValue;
+    updateUI();
+}
+
+function buyHouse(){
+    if(points>=housePrice){
+        points-=housePrice;
+        houses++;
+        housePrice*=1.5;
+        updateUI();
+    }
+}
+
+function buyFlower(){
+    if(points>=flowerPrice){
+        points-=flowerPrice;
+        flowers++;
+        flowerPrice*=1.5;
+        clickValue*=3;
+        updateUI();
+    }
+}
+
+function buySkin(price,img){
+    if(points>=price){
+        points-=price;
+        document.getElementById("clicker").src=img;
+        updateUI();
+    }
+}
+
+setInterval(function(){
+    if(houses>0){
+        let auto = houses * 1;
+        auto *= Math.pow(2, flowers);
+        points += auto;
+        updateUI();
+    }
+},1000);
+
+</script>
+
+</body>
+</html>
